@@ -20,19 +20,19 @@ const rightArrow = document.getElementById("rightArrow");
 
 const worlds = [
   {
-    key: "arcade",
-    name: "ARCADE",
-    themeClass: "theme-arcade",
-    previewClass: "arcade-preview",
-    page: "arcade.html",
-    dialogue: "ARCADE hums with neon energy.",
-    floats: [
-      { type: "square", left: "16%", top: "18%", color: "#6ad8ff", delay: "0s" },
-      { type: "square", left: "80%", top: "22%", color: "#9e78ff", delay: "0.2s" },
-      { type: "circle", left: "21%", top: "70%", color: "#ffb347", delay: "0.4s" },
-      { type: "square", left: "77%", top: "66%", color: "#4bf7ff", delay: "0.6s" }
-    ]
-  },
+  key: "beach",
+  name: "BEACH",
+  themeClass: "theme-paradise",
+  previewClass: "paradise-preview",
+  page: "beach.html",
+  dialogue: "BEACH glows with sun and ocean air.",
+  floats: [
+    { type: "circle", left: "18%", top: "18%", color: "#a8f4d0", delay: "0s" },
+    { type: "diamond", left: "80%", top: "24%", color: "#c0ffe7", delay: "0.2s" },
+    { type: "circle", left: "24%", top: "72%", color: "#79d8b5", delay: "0.4s" },
+    { type: "diamond", left: "76%", top: "68%", color: "#b7ffdf", delay: "0.6s" }
+  ]
+},
   {
     key: "candyland",
     name: "CANDYLAND",
@@ -73,20 +73,6 @@ const worlds = [
       { type: "bar", left: "78%", top: "18%", color: "#ffbddf", delay: "0.2s" },
       { type: "circle", left: "25%", top: "74%", color: "#ff95ba", delay: "0.4s" },
       { type: "circle", left: "76%", top: "69%", color: "#ffe3f0", delay: "0.6s" }
-    ]
-  },
-  {
-    key: "ice-rink",
-    name: "ICE RINK",
-    themeClass: "theme-ice-rink",
-    previewClass: "ice-rink-preview",
-    page: "icerink.html",
-    dialogue: "ICE RINK shimmers with frost and stillness.",
-    floats: [
-      { type: "snow", left: "18%", top: "18%", content: "❄", delay: "0s" },
-      { type: "snow", left: "80%", top: "24%", content: "❄", delay: "0.2s" },
-      { type: "snow", left: "24%", top: "72%", content: "❄", delay: "0.4s" },
-      { type: "snow", left: "76%", top: "68%", content: "❄", delay: "0.6s" }
     ]
   },
   {
@@ -135,6 +121,11 @@ const ease = 0.35;
 
 const exploredWorlds = JSON.parse(localStorage.getItem("dynamicEscapadeExplored")) || [];
 
+const params = new URLSearchParams(window.location.search);
+const shouldSkipIntro =
+  params.get("screen") === "select" ||
+  sessionStorage.getItem("dynamicEscapadeReturnToSelect") === "true";
+
 function typeTitle() {
   if (introIndex < intro.length) {
     typed += intro[introIndex];
@@ -178,6 +169,10 @@ function saveExploredWorld(worldKey) {
     exploredWorlds.push(worldKey);
     localStorage.setItem("dynamicEscapadeExplored", JSON.stringify(exploredWorlds));
   }
+}
+
+function saveCurrentWorldIndex() {
+  sessionStorage.setItem("dynamicEscapadeCurrentIndex", String(currentIndex));
 }
 
 function updateProgress() {
@@ -287,6 +282,7 @@ function endHoverState() {
 
 function goLeft() {
   currentIndex = (currentIndex - 1 + worlds.length) % worlds.length;
+  saveCurrentWorldIndex();
   renderWorld();
   if (hovered) {
     startHoverState();
@@ -295,6 +291,7 @@ function goLeft() {
 
 function goRight() {
   currentIndex = (currentIndex + 1) % worlds.length;
+  saveCurrentWorldIndex();
   renderWorld();
   if (hovered) {
     startHoverState();
@@ -304,6 +301,8 @@ function goRight() {
 function enterWorld() {
   const world = worlds[currentIndex];
   saveExploredWorld(world.key);
+  saveCurrentWorldIndex();
+  sessionStorage.setItem("dynamicEscapadeReturnToSelect", "true");
   updateProgress();
 
   portal.classList.add("entering");
@@ -312,6 +311,26 @@ function enterWorld() {
   setTimeout(() => {
     window.location.href = world.page;
   }, 1050);
+}
+
+function initializeScreen() {
+  const savedIndex = sessionStorage.getItem("dynamicEscapadeCurrentIndex");
+
+  if (savedIndex !== null) {
+    const parsedIndex = Number(savedIndex);
+    if (!Number.isNaN(parsedIndex) && parsedIndex >= 0 && parsedIndex < worlds.length) {
+      currentIndex = parsedIndex;
+    }
+  }
+
+  if (shouldSkipIntro) {
+    introScreen.classList.add("hidden");
+    worldSelectScreen.classList.remove("hidden");
+    sessionStorage.removeItem("dynamicEscapadeReturnToSelect");
+    renderWorld();
+  } else {
+    typeTitle();
+  }
 }
 
 window.addEventListener("mousemove", (event) => {
@@ -361,5 +380,5 @@ window.addEventListener("keydown", (event) => {
   }
 });
 
-typeTitle();
+initializeScreen();
 animateCursor();

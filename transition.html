@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.13/lib/p5.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.13/lib/addons/p5.sound.min.js"></script>
-    <canvas id="portalCanvas"></canvas>
-    
-    
-    <link rel="stylesheet" type="text/css" href="style.css">
     <meta charset="utf-8" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portal Transition</title>
+    <link rel="stylesheet" href="transition.css" />
   </head>
   <body>
-    <main>
-    </main>
-    <script src="sketch.js"></script>
+    <canvas id="portalCanvas"></canvas>
+
+    <div id="startOverlay" class="start-overlay">
+      <p class="portal-text">Portal is open! Click to pass through.</p>
+    </div>
+
+    <script src="transition.js"></script>
   </body>
 </html>
