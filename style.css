@@ -1,0 +1,524 @@
+@font-face {
+  font-family: "PressStart2P";
+  src: url("PressStart2P-Regular.ttf") format("truetype");
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  cursor: none;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  background: #240952;
+  font-family: "PressStart2P", monospace;
+  transition:
+    background 0.7s ease,
+    box-shadow 0.7s ease;
+}
+
+.app {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.screen {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+
+/* INTRO SCREEN */
+
+.intro-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  color: #ffa500;
+  font-size: clamp(2rem, 4vw, 3rem);
+  text-align: center;
+  text-shadow: 4px 4px 0 #5c3730;
+  letter-spacing: 0.04em;
+  transform: translateY(-60px);
+  min-height: 1.4em;
+  padding: 0 20px;
+}
+
+.explore-btn {
+  margin-top: 20px;
+  min-width: 360px;
+  max-width: calc(100vw - 40px);
+  height: 70px;
+  padding: 0 30px;
+  border: none;
+  border-radius: 12px;
+  background: #ffa500;
+  color: #240952;
+  font-family: "PressStart2P", monospace;
+  font-size: clamp(0.8rem, 1.6vw, 1.55rem);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  white-space: nowrap;
+  animation: idlePulse 2.2s ease-in-out infinite;
+}
+
+.explore-btn:hover {
+  animation: hoverPulse 0.9s ease-in-out infinite;
+}
+
+/* WORLD SELECT SCREEN */
+
+.world-select-screen {
+  overflow: hidden;
+}
+
+.progress-counter {
+  position: absolute;
+  top: 26px;
+  right: 28px;
+  z-index: 20;
+  color: #ffa500;
+  font-size: 0.8rem;
+  text-shadow: 3px 3px 0 #5c3730;
+  letter-spacing: 0.06em;
+}
+
+.portal-stage {
+  position: absolute;
+  left: 50%;
+  top: 48%;
+  transform: translate(-50%, -50%);
+  width: 340px;
+  height: 520px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.portal-glow {
+  position: absolute;
+  width: 360px;
+  height: 540px;
+  border-radius: 180px 180px 36px 36px;
+  background:
+    radial-gradient(circle at center, rgba(255, 165, 0, 0.18) 0%, rgba(255, 165, 0, 0.04) 55%, rgba(255, 165, 0, 0) 75%);
+  filter: blur(12px);
+  animation: glowPulse 2.8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.portal {
+  position: relative;
+  width: 320px;
+  height: 500px;
+  border: none;
+  background: transparent;
+  outline: none;
+  z-index: 2;
+}
+
+.portal-frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 12px;
+  border-radius: 160px 160px 28px 28px;
+  background: linear-gradient(180deg, #ffcb6b 0%, #ffa500 48%, #d97a00 100%);
+  box-shadow:
+    0 0 0 5px #5c3730,
+    0 0 24px rgba(255, 165, 0, 0.18);
+  overflow: hidden;
+  animation: portalShimmer 3s ease-in-out infinite;
+}
+
+.portal-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 150px 150px 20px 20px;
+  background: linear-gradient(180deg, #3e1575 0%, #240952 58%, #18063c 100%);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    transform 0.7s ease,
+    background 0.7s ease,
+    box-shadow 0.7s ease;
+}
+
+.portal-world-name {
+  position: absolute;
+  z-index: 4;
+  width: 80%;
+  color: #ffa500;
+  font-size: clamp(1rem, 1.8vw, 1.25rem);
+  text-align: center;
+  line-height: 1.5;
+  text-shadow: 3px 3px 0 #5c3730;
+  letter-spacing: 0.08em;
+  transition:
+    opacity 0.35s ease,
+    transform 0.45s ease,
+    color 0.45s ease;
+}
+
+.portal-preview {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  z-index: 1;
+}
+
+.portal::before {
+  content: "";
+  position: absolute;
+  inset: 22px;
+  border-radius: 145px 145px 18px 18px;
+  border: 2px solid rgba(255, 220, 160, 0.3);
+  pointer-events: none;
+  z-index: 5;
+}
+
+.portal.is-hovered .portal-inner {
+  transform: scale(1.01);
+  box-shadow: inset 0 0 38px rgba(255, 255, 255, 0.08);
+}
+
+.portal.is-hovered .portal-preview {
+  opacity: 1;
+}
+
+.portal.is-hovered .portal-world-name {
+  transform: scale(1.03);
+  color: #fff4d2;
+}
+
+.portal-whirlpool {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 3;
+  background:
+    repeating-radial-gradient(
+      circle at center,
+      rgba(255, 255, 255, 0.95) 0 7px,
+      rgba(255, 165, 0, 0.78) 7px 16px,
+      rgba(78, 26, 138, 0.85) 16px 28px,
+      rgba(36, 9, 82, 0.9) 28px 42px
+    );
+  transform: scale(0.3) rotate(0deg);
+  border-radius: 150px 150px 20px 20px;
+}
+
+.portal.entering .portal-whirlpool {
+  animation: whirlpoolIn 1.05s cubic-bezier(0.2, 0.7, 0.1, 1) forwards;
+}
+
+.nav-arrow {
+  position: absolute;
+  top: 48%;
+  transform: translateY(-50%);
+  width: 82px;
+  height: 82px;
+  border: none;
+  border-radius: 14px;
+  background: #ffa500;
+  color: #240952;
+  font-family: "PressStart2P", monospace;
+  font-size: 1.8rem;
+  box-shadow: 0 0 0 4px #5c3730;
+  z-index: 15;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.nav-arrow:hover {
+  transform: translateY(-50%) scale(1.06);
+  box-shadow:
+    0 0 0 4px #5c3730,
+    0 0 16px rgba(255, 165, 0, 0.35);
+}
+
+.left-arrow {
+  left: 10vw;
+}
+
+.right-arrow {
+  right: 10vw;
+}
+
+.dialogue-box {
+  position: absolute;
+  left: 50%;
+  bottom: 34px;
+  transform: translateX(-50%);
+  width: min(900px, calc(100vw - 70px));
+  min-height: 112px;
+  padding: 24px 28px 34px;
+  border: 5px solid #ffa500;
+  border-radius: 18px;
+  background: rgba(36, 9, 82, 0.96);
+  box-shadow:
+    0 0 0 5px #5c3730,
+    0 0 24px rgba(0, 0, 0, 0.18);
+  z-index: 20;
+}
+
+.dialogue-text {
+  color: #ffa500;
+  font-size: clamp(0.8rem, 1.2vw, 1rem);
+  line-height: 1.8;
+  text-shadow: 2px 2px 0 #5c3730;
+  letter-spacing: 0.05em;
+}
+
+.dialogue-corner {
+  position: absolute;
+  right: 18px;
+  bottom: 10px;
+  color: #ffa500;
+  font-size: 0.9rem;
+  animation: blinkArrow 1s steps(1) infinite;
+}
+
+.floating-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 6;
+}
+
+.float-shape {
+  position: absolute;
+  opacity: 0;
+  animation:
+    floatIn 0.5s ease forwards,
+    drift 4.8s ease-in-out infinite;
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.18));
+}
+
+.float-circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
+.float-square {
+  width: 18px;
+  height: 18px;
+}
+
+.float-diamond {
+  width: 18px;
+  height: 18px;
+  transform: rotate(45deg);
+}
+
+.float-bar {
+  width: 12px;
+  height: 46px;
+  border-radius: 999px;
+}
+
+.float-snow {
+  font-size: 1.3rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.custom-cursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 50px;
+  height: 50px;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  will-change: transform, width, height;
+}
+
+body.button-hover .custom-cursor,
+body.arrow-hover .custom-cursor,
+body.portal-hover .custom-cursor {
+  width: 60px;
+  height: 60px;
+}
+
+body.world-tinted {
+  box-shadow: inset 0 0 180px rgba(255, 255, 255, 0.05);
+}
+
+body.theme-beach {
+  background: linear-gradient(180deg, #240952 0%, #2d0e6d 50%, #111f76 100%);
+}
+
+body.theme-candyland {
+  background: linear-gradient(180deg, #240952 0%, #6e1d72 45%, #ff8fb7 100%);
+}
+
+body.theme-carnival {
+  background: linear-gradient(180deg, #240952 0%, #7c1120 45%, #c38b1c 100%);
+}
+
+body.theme-concert {
+  background: linear-gradient(180deg, #240952 0%, #53113f 45%, #941e3d 100%);
+}
+
+body.theme-mansion {
+  background: linear-gradient(180deg, #240952 0%, #4f1126 45%, #8d6b2f 100%);
+}
+
+body.theme-paradise {
+  background: linear-gradient(180deg, #240952 0%, #0f5f49 45%, #61c3a0 100%);
+}
+
+.portal-preview.beach-preview {
+  background:
+    radial-gradient(circle at 50% 40%, rgba(79, 198, 255, 0.3) 0%, rgba(79, 198, 255, 0) 40%),
+    linear-gradient(180deg, #1c0b46 0%, #221870 52%, #0b3c67 100%);
+}
+
+.portal-preview.candyland-preview {
+  background:
+    radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0) 26%),
+    linear-gradient(180deg, #4a1666 0%, #c15687 50%, #ffc2cf 100%);
+}
+
+.portal-preview.carnival-preview {
+  background:
+    radial-gradient(circle at 50% 25%, rgba(255, 224, 148, 0.28) 0%, rgba(255, 224, 148, 0) 26%),
+    linear-gradient(180deg, #44091d 0%, #8b1f2f 52%, #d19d28 100%);
+}
+
+.portal-preview.concert-preview {
+  background:
+    radial-gradient(circle at 50% 20%, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0) 22%),
+    linear-gradient(180deg, #21052f 0%, #4a0c53 40%, #961c44 100%);
+}
+
+.portal-preview.mansion-preview {
+  background:
+    radial-gradient(circle at 50% 22%, rgba(255, 215, 143, 0.25) 0%, rgba(255, 215, 143, 0) 22%),
+    linear-gradient(180deg, #2a081a 0%, #601c31 45%, #9a7a35 100%);
+}
+
+.portal-preview.paradise-preview {
+  background:
+    radial-gradient(circle at 60% 26%, rgba(182, 255, 222, 0.22) 0%, rgba(182, 255, 222, 0) 24%),
+    linear-gradient(180deg, #0a3a35 0%, #136956 45%, #6dd0a7 100%);
+}
+
+.hidden {
+  display: none;
+}
+
+@keyframes idlePulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+@keyframes hoverPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes portalShimmer {
+  0%, 100% {
+    box-shadow:
+      0 0 0 5px #5c3730,
+      0 0 24px rgba(255, 165, 0, 0.18);
+  }
+  50% {
+    box-shadow:
+      0 0 0 5px #5c3730,
+      0 0 34px rgba(255, 165, 0, 0.3);
+  }
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.75;
+  }
+  50% {
+    transform: scale(1.03);
+    opacity: 1;
+  }
+}
+
+@keyframes whirlpoolIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3) rotate(0deg);
+    filter: blur(0px);
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: scale(2.8) rotate(540deg);
+    filter: blur(2px);
+  }
+}
+
+@keyframes blinkArrow {
+  0%, 49% {
+    opacity: 1;
+  }
+  50%, 100% {
+    opacity: 0.35;
+  }
+}
+
+@keyframes floatIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.7);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes drift {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(4deg);
+  }
+}
