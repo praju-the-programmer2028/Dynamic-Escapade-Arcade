@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Beach World</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(180deg, #6ed0ff 0%, #8ee7ff 45%, #fce6a8 100%);
+      font-family: Arial, sans-serif;
+    }
+
+    .card {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.85);
+      padding: 32px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    h1 {
+      margin-top: 0;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 14px 24px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Beach World</h1>
+    <p>This is just a test page.</p>
+    <button id="finishWorldBtn" type="button">Finish World</button>
+  </div>
+
+  <script>
+    document.getElementById("finishWorldBtn").addEventListener("click", () => {
+      window.location.href = "transition.html";
+    });
+  </script>
+</body>
+</html>

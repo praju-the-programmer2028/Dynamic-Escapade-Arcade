@@ -1,0 +1,63 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: rgb(5, 0, 20);
+}
+
+#portalCanvas {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+}
+
+body {
+  font-family: "Georgia", "Times New Roman", "Garamond", serif;
+}
+
+.start-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(circle at center, rgba(120, 90, 255, 0.08) 0%, rgba(25, 10, 55, 0.45) 38%, rgba(0, 0, 0, 0.96) 100%);
+  z-index: 20;
+  cursor: pointer;
+}
+
+.start-overlay.hidden {
+  display: none;
+}
+
+.portal-text {
+  margin: 0;
+  padding: 0 24px;
+  color: #f5f0ff;
+  font-size: clamp(1.9rem, 3.2vw, 3.3rem);
+  font-weight: 400;
+  line-height: 1.35;
+  text-align: center;
+  font-family: "Georgia", "Times New Roman", "Garamond", serif;
+  letter-spacing: 0.01em;
+  text-shadow:
+    2px 2px 0 rgba(95, 65, 150, 0.95),
+    4px 4px 0 rgba(55, 30, 95, 0.92),
+    8px 8px 18px rgba(10, 0, 30, 0.38),
+    0 0 12px rgba(255, 255, 255, 0.2),
+    0 0 28px rgba(155, 115, 255, 0.24);
+  animation: portalTextFloat 3s ease-in-out infinite;
+}
+
+@keyframes portalTextFloat {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
