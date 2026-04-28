@@ -57,10 +57,13 @@ function startTransition() {
 
 window.addEventListener("click", startTransition);
 
+const transitionParams = new URLSearchParams(window.location.search);
+const nextPage = transitionParams.get("next") || "index.html?screen=select";
+
 music.addEventListener("ended", () => {
   if (!redirecting) {
     redirecting = true;
-    window.location.href = "index.html?screen=select";
+    window.location.href = nextPage;
   }
 });
 

@@ -24,7 +24,7 @@ const worlds = [
   name: "BEACH",
   themeClass: "theme-paradise",
   previewClass: "paradise-preview",
-  page: "beach.html",
+  page: "transition.html?next=world.html?world=beach",
   dialogue: "BEACH glows with sun and ocean air.",
   floats: [
     { type: "circle", left: "18%", top: "18%", color: "#a8f4d0", delay: "0s" },
@@ -38,7 +38,7 @@ const worlds = [
     name: "CANDYLAND",
     themeClass: "theme-candyland",
     previewClass: "candyland-preview",
-    page: "candyland.html",
+    page: "transition.html?next=world.html?world=candyland",
     dialogue: "CANDYLAND glows with sugar-sweet color.",
     floats: [
       { type: "circle", left: "18%", top: "22%", color: "#ffd0e8", delay: "0s" },
@@ -52,7 +52,7 @@ const worlds = [
     name: "CARNIVAL",
     themeClass: "theme-carnival",
     previewClass: "carnival-preview",
-    page: "carnival.html",
+    page: "transition.html?next=world.html?world=carnival",
     dialogue: "CARNIVAL sparkles just beyond the curtain.",
     floats: [
       { type: "circle", left: "14%", top: "24%", color: "#ffcc5a", delay: "0s" },
@@ -66,7 +66,7 @@ const worlds = [
     name: "CONCERT",
     themeClass: "theme-concert",
     previewClass: "concert-preview",
-    page: "concert.html",
+    page: "transition.html?next=world.html?world=concert",
     dialogue: "CONCERT calls with lights and thunder.",
     floats: [
       { type: "bar", left: "18%", top: "16%", color: "#ffffff", delay: "0s" },
@@ -80,7 +80,7 @@ const worlds = [
     name: "MANSION",
     themeClass: "theme-mansion",
     previewClass: "mansion-preview",
-    page: "mansion.html",
+    page: "transition.html?next=world.html?world=mansion",
     dialogue: "MANSION waits in velvet gold.",
     floats: [
       { type: "diamond", left: "19%", top: "20%", color: "#ffd58e", delay: "0s" },
@@ -94,7 +94,7 @@ const worlds = [
     name: "PARADISE",
     themeClass: "theme-paradise",
     previewClass: "paradise-preview",
-    page: "paradise.html",
+    page: "transition.html?next=world.html?world=paradise",
     dialogue: "PARADISE breathes in green and waterlight.",
     floats: [
       { type: "circle", left: "18%", top: "18%", color: "#a8f4d0", delay: "0s" },
@@ -300,17 +300,12 @@ function goRight() {
 
 function enterWorld() {
   const world = worlds[currentIndex];
-  saveExploredWorld(world.key);
+
   saveCurrentWorldIndex();
   sessionStorage.setItem("dynamicEscapadeReturnToSelect", "true");
   updateProgress();
 
-  portal.classList.add("entering");
-  dialogueText.textContent = `Entering ${world.name}...`;
-
-  setTimeout(() => {
-    window.location.href = world.page;
-  }, 1050);
+  window.location.href = world.page;
 }
 
 function initializeScreen() {

@@ -1,3 +1,6 @@
+* {
+  cursor: none !important;
+}
 @font-face {
   font-family: "PressStart2P";
   src: url("PressStart2P-Regular.ttf") format("truetype");
@@ -434,6 +437,17 @@ body.theme-paradise {
 
 .hidden {
   display: none;
+}
+
+#customCursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 44px;
+  height: 44px;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
 }
 
 @keyframes idlePulse {

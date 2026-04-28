@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Dynamic Escapade World</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.13/lib/p5.js"></script>
+
+    <link rel="stylesheet" href="world.css" />
+  </head>
+
+  <body>
+    <img id="customCursor" class="custom-cursor" src="cursor.webp" alt="">
+    <main id="gameContainer">
+      <div id="worldUi">
+        <div class="ui-corner top-left">
+          <button id="backButton" class="world-button">Exit</button>
+          <button id="resetButton" class="world-button">Reset</button>
+        </div>
+
+        <div class="ui-corner top-right">
+          <button id="musicButton" class="world-button">Music</button>
+        </div>
+
+        <div class="ui-corner bottom-left">
+          <button id="helpButton" class="world-button circle-button">?</button>
+        </div>
+
+        <div class="ui-corner bottom-right">
+          <div id="closenessMeter">
+            <div id="closenessFill"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="worldTitleIntro"></div>
+
+      <div id="overlayTint" class="overlay hidden"></div>
+
+      <div id="songOverlay" class="modal hidden">
+        <h1>Choose your soundtrack</h1>
+
+        <div id="songCards"></div>
+
+        <button id="enterWorldButton" class="confirm-button disabled" disabled>
+          Enter World
+        </button>
+      </div>
+
+      <div id="leaveModal" class="modal small-modal hidden">
+        <h1>Leave this world?</h1>
+        <div class="modal-button-row">
+          <button id="saveExitButton" class="confirm-button">Save and Exit</button>
+          <button id="noSaveExitButton" class="confirm-button secondary">Exit Without Saving</button>
+          <button id="cancelLeaveButton" class="confirm-button secondary">Cancel</button>
+        </div>
+      </div>
+
+      <div id="resetModal" class="modal small-modal hidden">
+        <h1>Reset world?</h1>
+        <div class="modal-button-row">
+          <button id="confirmResetButton" class="confirm-button">Reset</button>
+          <button id="cancelResetButton" class="confirm-button secondary">Cancel</button>
+        </div>
+      </div>
+
+      <div id="instructionsModal" class="modal small-modal hidden">
+        <h1>Instructions</h1>
+        <p>
+          Drag the character around the world. Move at least one limb. Use the meter
+          to tell when you are getting closer. Choose your soundtrack, reset the world,
+          or return to world select using the corner buttons.
+        </p>
+        <button id="closeInstructionsButton" class="confirm-button">Close</button>
+      </div>
+
+      <div id="completeModal" class="modal small-modal hidden">
+        <h1 id="completeText">World Complete!</h1>
+        <button id="returnWorldSelectButton" class="confirm-button">
+          Return to World Select
+        </button>
+      </div>
+    </main>
+
+    <script src="world.js"></script>
+  </body>
+</html>
