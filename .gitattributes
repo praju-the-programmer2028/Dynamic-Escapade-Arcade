@@ -1,0 +1,10 @@
+*.mp3 filter=lfs diff=lfs merge=lfs -text
+audio/*.mp3 filter=lfs diff=lfs merge=lfs -text
+*.png filter=lfs diff=lfs merge=lfs -text
+*.webp filter=lfs diff=lfs merge=lfs -text
+<<<<<<< HEAD
+=======
+Acrylic[[:space:]]Mansion[[:space:]]Foyer.png filter=lfs diff=lfs merge=lfs -text
+Concert[[:space:]]Butterfly.png filter=lfs diff=lfs merge=lfs -text
+Varied[[:space:]]Dessert[[:space:]]Vale[[:space:]]v2.png filter=lfs diff=lfs merge=lfs -text
+>>>>>>> de2b4addeb3e9a38550d232e73ed699fc8ff6030

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Escapade</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app">
+
+    <!-- INTRO SCREEN -->
+    <section id="introScreen" class="screen intro-screen">
+      <h1 id="title" class="title"></h1>
+
+      <button id="exploreBtn" class="explore-btn" type="button">
+        READY TO EXPLORE
+      </button>
+    </section>
+
+    <!-- WORLD SELECT SCREEN -->
+    <section id="worldSelectScreen" class="screen world-select-screen hidden">
+      <div class="progress-counter" id="progressCounter">★ 0 / 7</div>
+
+      <button id="leftArrow" class="nav-arrow left-arrow" type="button" aria-label="Previous world">
+        &#9664;
+      </button>
+
+      <section class="portal-stage">
+        <div class="portal-glow"></div>
+
+        <button id="portal" class="portal" type="button" aria-label="Enter selected world">
+          <div class="portal-frame">
+            <div class="portal-inner">
+              <div id="portalWorldName" class="portal-world-name">BEACH</div>
+              <div id="portalPreview" class="portal-preview"></div>
+              <div class="portal-whirlpool"></div>
+            </div>
+          </div>
+        </button>
+      </section>
+
+      <button id="rightArrow" class="nav-arrow right-arrow" type="button" aria-label="Next world">
+        &#9654;
+      </button>
+
+      <div id="floatingLayer" class="floating-layer" aria-hidden="true"></div>
+
+      <section class="dialogue-box">
+        <p id="dialogueText" class="dialogue-text">A NEW WORLD AWAITS...</p>
+        <span class="dialogue-corner">&#9662;</span>
+      </section>
+    </section>
+
+    <img id="customCursor" class="custom-cursor" src="cursor.webp" alt="">
+  </main>
+
+  <audio id="bgMusic" src="audio/background.mp3" loop></audio>
+
+  <script src="script.js"></script>
+</body>
+</html>
