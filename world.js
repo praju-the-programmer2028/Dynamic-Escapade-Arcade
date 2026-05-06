@@ -161,6 +161,7 @@ const worldParams = new URLSearchParams(window.location.search);
 let currentWorldKey = worldParams.get("world");
 let currentWorld = worlds[currentWorldKey];
 let backgroundImg;
+let accessoryImages = {};
 
 let gameStarted = false;
 let gameFrozen = true;
@@ -193,6 +194,15 @@ let uiPadding = {
 
 function preload() {
   backgroundImg = loadImage(currentWorld.backgroundImage);
+
+  accessoryImages = {
+    beach: loadImage("accessory/sunglasses.webp"),
+    candyland: loadImage("accessory/icecream.webp"),
+    carnival: loadImage("accessory/cottoncandy.webp"),
+    concert: loadImage("accessory/lightstick.png"),
+    mansion: loadImage("accessory/crown.png"),
+    paradise: loadImage("accessory/flowercrown.png")
+  };
 }
 
 function setup() {
@@ -347,6 +357,8 @@ function setupCharacter() {
       circle(joints.rightFoot.x, joints.rightFoot.y, 20);
 
       pop();
+
+      drawWorldAccessory(joints);
     },
 
     reset() {
@@ -367,6 +379,62 @@ function setupCharacter() {
   hideModal("completeModal");
 }
   };
+}
+
+function drawWorldAccessory(joints) {
+  const accessory = accessoryImages[currentWorldKey];
+
+  if (!accessory) {
+    return;
+  }
+
+  if (currentWorldKey === "beach") {
+    drawHeadAccessory(accessory, joints.head.x, joints.head.y - 5, 75, 0);
+  }
+
+  if (currentWorldKey === "candyland") {
+    drawHandAccessory(accessory, joints.rightHand.x + 5, joints.rightHand.y - 5, 75, -40);
+  }
+
+  if (currentWorldKey === "carnival") {
+    drawHandAccessory(accessory, joints.leftHand.x + 8, joints.leftHand.y - 25, 75, 0);
+  }
+
+  if (currentWorldKey === "concert") {
+    drawHandAccessory(accessory, joints.rightHand.x + 5, joints.rightHand.y - 15, 200, 20);
+  }
+
+  if (currentWorldKey === "mansion") {
+    drawHeadAccessory(accessory, joints.head.x, joints.head.y - 35, 72, 0);
+  }
+
+  if (currentWorldKey === "paradise") {
+    drawHeadAccessory(accessory, joints.head.x, joints.head.y - 20, 82, 0);
+  }
+}
+
+function drawHeadAccessory(img, x, y, accessoryWidth, rotationDegrees) {
+  push();
+  imageMode(CENTER);
+  translate(x, y);
+  rotate(radians(rotationDegrees));
+
+  const accessoryHeight = accessoryWidth * (img.height / img.width);
+  image(img, 0, 0, accessoryWidth, accessoryHeight);
+
+  pop();
+}
+
+function drawHandAccessory(img, x, y, accessoryWidth, rotationDegrees) {
+  push();
+  imageMode(CENTER);
+  translate(x, y);
+  rotate(radians(rotationDegrees));
+
+  const accessoryHeight = accessoryWidth * (img.height / img.width);
+  image(img, 0, 0, accessoryWidth, accessoryHeight);
+
+  pop();
 }
 
 function pointFromAngle(origin, angle, distance) {
