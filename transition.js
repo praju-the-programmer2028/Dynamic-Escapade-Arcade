@@ -127,3 +127,29 @@ function draw() {
   ctx.restore();
   ctx.globalAlpha = 1;
 }
+
+const customCursor = document.getElementById("customCursor");
+
+let customMouseX = window.innerWidth / 2;
+let customMouseY = window.innerHeight / 2;
+let cursorX = customMouseX;
+let cursorY = customMouseY;
+const cursorEase = 0.35;
+
+window.addEventListener("mousemove", (event) => {
+  customMouseX = event.clientX;
+  customMouseY = event.clientY;
+});
+
+function animateCustomCursor() {
+  cursorX += (customMouseX - cursorX) * cursorEase;
+  cursorY += (customMouseY - cursorY) * cursorEase;
+
+  if (customCursor) {
+    customCursor.style.transform = `translate(${cursorX}px, ${cursorY}px) translate(-50%, -50%)`;
+  }
+
+  requestAnimationFrame(animateCustomCursor);
+}
+
+animateCustomCursor();

@@ -3,6 +3,7 @@ const worlds = {
         name: "Beach",
         backgroundImage: "background/beach.png",
         tintColor: "rgba(255, 100, 185, 0.35)",
+        barColor: "linear-gradient(to top, #4ee7dc, #ffffff)",
         songs: [
         {
             title: "Happy Ending",
@@ -14,45 +15,47 @@ const worlds = {
             title: "Phoenix",
             artist: "Straykids",
             file: "audio/beach phoenix.mp3",
-            cover: "album phoenix.png"
+            cover: "album/beach phoenix.png"
         }
         ],
         targetLocation: {
         x: 0.72,
         y: 0.48
         },
-        completionDistance: 90
+        completionDistance: 55
     },
 
     candyland: {
     name: "Candyland",
     backgroundImage: "background/candyland.png",
     tintColor: "rgba(255, 100, 185, 0.35)",
+    barColor: "linear-gradient(to top, #ff7bd8, #ffffff)",
     songs: [
       {
         title: "Candy",
         artist: "Baekhyun",
         file: "audio/candyland candy.mp3",
-        cover: "images/candyland candy.png"
+        cover: "album/candyland candy.png"
       },
       {
         title: "Juice",
         artist: "Mirae",
         file: "audio/candyland juice.mp3",
-        cover: "images/candyland juice.png"
+        cover: "album/candyland juice.png"
       }
     ],
     targetLocation: {
       x: 0.72,
       y: 0.48
     },
-    completionDistance: 90
+    completionDistance: 55
   },
 
   carnival: {
         name: "Carnival",
         backgroundImage: "background/carnival.png",
         tintColor: "rgba(255, 100, 185, 0.35)",
+        barColor: "linear-gradient(to top, #e45b68, #fff1d8)",
         songs: [
         {
             title: "Popping",
@@ -71,13 +74,14 @@ const worlds = {
         x: 0.72,
         y: 0.48
         },
-        completionDistance: 90
+        completionDistance: 55
     },
 
     concert: {
         name: "Concert",
         backgroundImage: "background/concert.png",
         tintColor: "rgba(255, 100, 185, 0.35)",
+        barColor: "linear-gradient(to top, #f04bc3, #8beaff)",
         songs: [
         {
             title: "It's Alright",
@@ -96,13 +100,14 @@ const worlds = {
         x: 0.72,
         y: 0.48
         },
-        completionDistance: 90
+        completionDistance: 55
     },
 
     mansion: {
         name: "Mansion",
         backgroundImage: "background/mansion.png",
         tintColor: "rgba(255, 100, 185, 0.35)",
+        barColor: "linear-gradient(to top, #9f163d, #ffd4e3)",
         songs: [
         {
             title: "Make Love",
@@ -121,13 +126,14 @@ const worlds = {
         x: 0.72,
         y: 0.48
         },
-        completionDistance: 90
+        completionDistance: 55
     },
 
     paradise: {
         name: "Paradise",
         backgroundImage: "background/paradise.png",
         tintColor: "rgba(255, 100, 185, 0.35)",
+        barColor: "linear-gradient(to top, #61d99b, #dcfff0)",
         songs: [
         {
             title: "Your Breath",
@@ -146,7 +152,7 @@ const worlds = {
         x: 0.72,
         y: 0.48
         },
-        completionDistance: 90
+        completionDistance: 55
     }
 
 };
@@ -170,6 +176,14 @@ let character;
 let activeDrag = null;
 let limbMoved = false;
 
+let bodyMoved = false;
+let targetLocation = {
+  x: 0,
+  y: 0
+};
+
+const requiredLimbMovement = Math.PI / 6;
+
 let uiPadding = {
   top: 92,
   right: 86,
@@ -184,23 +198,66 @@ function preload() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
   setupCharacter();
+  randomizeTargetLocation();
+  applyWorldBarColor();
   setupUiEvents();
   buildSongCards();
   openSongOverlay(true);
   updateClosenessMeter(0);
 }
 
+function randomizeTargetLocation() {
+  const bodyRadius = 125;
+
+  const minX = uiPadding.left + bodyRadius;
+  const maxX = width - uiPadding.right - bodyRadius;
+  const minY = uiPadding.top + bodyRadius;
+  const maxY = height - uiPadding.bottom - bodyRadius;
+
+  targetLocation = {
+    x: random(minX, maxX),
+    y: random(minY, maxY)
+  };
+}
+
+function applyWorldBarColor() {
+  const fill = document.getElementById("closenessFill");
+
+  if (fill && currentWorld.barColor) {
+    fill.style.background = currentWorld.barColor;
+  }
+}
+
+function angleDifference(a, b) {
+  return Math.abs(Math.atan2(Math.sin(a - b), Math.cos(a - b)));
+}
+
+function updateLimbMoved() {
+  const movedEnough =
+    angleDifference(character.leftArmAngle, character.startingPose.leftArmAngle) >= requiredLimbMovement ||
+    angleDifference(character.rightArmAngle, character.startingPose.rightArmAngle) >= requiredLimbMovement ||
+    angleDifference(character.leftLegAngle, character.startingPose.leftLegAngle) >= requiredLimbMovement ||
+    angleDifference(character.rightLegAngle, character.startingPose.rightLegAngle) >= requiredLimbMovement;
+
+  limbMoved = movedEnough;
+}
+
 function draw() {
   drawBackground();
 
   if (gameStarted) {
-    character.draw();
-    updateCloseness();
+  character.draw();
 
-    if (!worldCompleted && checkWorldComplete()) {
-      completeWorld();
-    }
+  if (bodyMoved) {
+    updateCloseness();
+  } else {
+    updateClosenessMeter(0);
   }
+
+  if (!worldCompleted && checkWorldComplete()) {
+    completeWorld();
+  }
+}
 }
 
 function drawBackground() {
@@ -228,6 +285,13 @@ function setupCharacter() {
     rightArmAngle: radians(-30),
     leftLegAngle: radians(115),
     rightLegAngle: radians(65),
+
+    startingPose: {
+  leftArmAngle: radians(210),
+  rightArmAngle: radians(-30),
+  leftLegAngle: radians(115),
+  rightLegAngle: radians(65)
+},
 
     getJoints() {
       const shoulder = {
@@ -286,17 +350,22 @@ function setupCharacter() {
     },
 
     reset() {
-      this.x = width / 2;
-      this.y = height / 2;
-      this.leftArmAngle = radians(210);
-      this.rightArmAngle = radians(-30);
-      this.leftLegAngle = radians(115);
-      this.rightLegAngle = radians(65);
-      limbMoved = false;
-      worldCompleted = false;
-      gameFrozen = false;
-      hideModal("completeModal");
-    }
+  this.x = width / 2;
+  this.y = height / 2;
+  this.leftArmAngle = this.startingPose.leftArmAngle;
+  this.rightArmAngle = this.startingPose.rightArmAngle;
+  this.leftLegAngle = this.startingPose.leftLegAngle;
+  this.rightLegAngle = this.startingPose.rightLegAngle;
+
+  limbMoved = false;
+  bodyMoved = false;
+  worldCompleted = false;
+  gameFrozen = false;
+
+  randomizeTargetLocation();
+  updateClosenessMeter(0);
+  hideModal("completeModal");
+}
   };
 }
 
@@ -351,32 +420,34 @@ function mouseDragged() {
   }
 
   if (activeDrag === "body") {
-    character.x = mouseX;
-    character.y = mouseY;
-    keepCharacterInsideBounds();
-    return;
-  }
+  character.x = mouseX;
+  character.y = mouseY;
+  bodyMoved = true;
+  keepCharacterInsideBounds();
+  updateCloseness();
+  return;
+}
 
   const joints = character.getJoints();
 
   if (activeDrag === "leftArm") {
     character.leftArmAngle = atan2(mouseY - joints.shoulder.y, mouseX - joints.shoulder.x);
-    limbMoved = true;
+    updateLimbMoved();
   }
 
   if (activeDrag === "rightArm") {
     character.rightArmAngle = atan2(mouseY - joints.shoulder.y, mouseX - joints.shoulder.x);
-    limbMoved = true;
+    updateLimbMoved();
   }
 
   if (activeDrag === "leftLeg") {
     character.leftLegAngle = atan2(mouseY - joints.hip.y, mouseX - joints.hip.x);
-    limbMoved = true;
+    updateLimbMoved();
   }
 
   if (activeDrag === "rightLeg") {
     character.rightLegAngle = atan2(mouseY - joints.hip.y, mouseX - joints.hip.x);
-    limbMoved = true;
+    updateLimbMoved();
   }
 
   keepCharacterInsideBounds();
@@ -403,8 +474,10 @@ function keepCharacterInsideBounds() {
 }
 
 function updateCloseness() {
-  const targetX = currentWorld.targetLocation.x * width;
-  const targetY = currentWorld.targetLocation.y * height;
+  if (!bodyMoved) {
+    updateClosenessMeter(0);
+    return;
+  }
 
   const maxDistance = dist(
     uiPadding.left,
@@ -413,7 +486,7 @@ function updateCloseness() {
     height - uiPadding.bottom
   );
 
-  const currentDistance = dist(character.x, character.y, targetX, targetY);
+  const currentDistance = dist(character.x, character.y, targetLocation.x, targetLocation.y);
   const closeness = constrain(1 - currentDistance / maxDistance, 0, 1);
 
   updateClosenessMeter(closeness);
@@ -425,20 +498,23 @@ function updateClosenessMeter(closeness) {
 }
 
 function checkWorldComplete() {
-  const targetX = currentWorld.targetLocation.x * width;
-  const targetY = currentWorld.targetLocation.y * height;
-  const currentDistance = dist(character.x, character.y, targetX, targetY);
+  if (!bodyMoved || !limbMoved) {
+    return false;
+  }
 
-  return currentDistance <= currentWorld.completionDistance && limbMoved;
+  const currentDistance = dist(character.x, character.y, targetLocation.x, targetLocation.y);
+
+  return currentDistance <= currentWorld.completionDistance;
 }
 
 function completeWorld() {
   worldCompleted = true;
   gameFrozen = true;
-  saveWorldProgress();
   saveCompletedWorld();
+  updateClosenessMeter(1);
 
   document.getElementById("completeText").textContent = `${currentWorld.name} Complete!`;
+  showOverlayTint();
   showModal("completeModal");
 }
 
@@ -473,14 +549,9 @@ function setupUiEvents() {
     }
   });
 
-  document.getElementById("saveExitButton").addEventListener("click", () => {
-    saveWorldProgress();
-    returnToWorldSelect();
-  });
-
-  document.getElementById("noSaveExitButton").addEventListener("click", () => {
-    returnToWorldSelect();
-  });
+  document.getElementById("exitWorldButton").addEventListener("click", () => {
+  returnToWorldSelect();
+});
 
   document.getElementById("cancelLeaveButton").addEventListener("click", () => {
     hideModal("leaveModal");
@@ -490,10 +561,9 @@ function setupUiEvents() {
 
   document.getElementById("confirmResetButton").addEventListener("click", () => {
     character.reset();
-    saveWorldProgress();
-    hideModal("resetModal");
-    hideOverlayTint();
-    gameFrozen = false;
+hideModal("resetModal");
+hideOverlayTint();
+gameFrozen = false;
   });
 
   document.getElementById("cancelResetButton").addEventListener("click", () => {
@@ -525,7 +595,6 @@ function setupUiEvents() {
   });
 
   document.getElementById("returnWorldSelectButton").addEventListener("click", () => {
-    saveWorldProgress();
     returnToWorldSelect();
   });
 }
@@ -667,12 +736,12 @@ function saveWorldProgress() {
 
 function saveCompletedWorld() {
   const exploredWorlds =
-    JSON.parse(localStorage.getItem("dynamicEscapadeExplored")) || [];
+  JSON.parse(sessionStorage.getItem("dynamicEscapadeExplored")) || [];
 
-  if (!exploredWorlds.includes(currentWorldKey)) {
+    if (!exploredWorlds.includes(currentWorldKey)) {
     exploredWorlds.push(currentWorldKey);
-    localStorage.setItem("dynamicEscapadeExplored", JSON.stringify(exploredWorlds));
-  }
+    sessionStorage.setItem("dynamicEscapadeExplored", JSON.stringify(exploredWorlds));
+    }
 }
 
 function loadWorldProgress() {

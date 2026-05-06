@@ -22,16 +22,18 @@ const worlds = [
   {
   key: "beach",
   name: "BEACH",
-  themeClass: "theme-paradise",
-  previewClass: "paradise-preview",
+  themeClass: "theme-beach",
+  previewClass: "beach-preview",
   page: "transition.html?next=world.html?world=beach",
-  dialogue: "BEACH glows with sun and ocean air.",
+  dialogue: "BEACH calls from beneath the tide.",
   floats: [
-    { type: "circle", left: "18%", top: "18%", color: "#a8f4d0", delay: "0s" },
-    { type: "diamond", left: "80%", top: "24%", color: "#c0ffe7", delay: "0.2s" },
-    { type: "circle", left: "24%", top: "72%", color: "#79d8b5", delay: "0.4s" },
-    { type: "diamond", left: "76%", top: "68%", color: "#b7ffdf", delay: "0.6s" }
-  ]
+  { image: "object/shell.png", left: "8%", top: "14%", size: "58px", delay: "0s", rotate: "-8deg" },
+  { image: "object/shell.png", left: "28%", top: "24%", size: "38px", delay: "0.3s", rotate: "10deg" },
+  { image: "object/shell.png", left: "72%", top: "16%", size: "52px", delay: "0.6s", rotate: "6deg" },
+  { image: "object/shell.png", left: "88%", top: "42%", size: "42px", delay: "0.9s", rotate: "-12deg" },
+  { image: "object/shell.png", left: "16%", top: "70%", size: "48px", delay: "1.2s", rotate: "14deg" },
+  { image: "object/shell.png", left: "78%", top: "76%", size: "64px", delay: "1.5s", rotate: "-5deg" }
+]
 },
   {
     key: "candyland",
@@ -39,13 +41,15 @@ const worlds = [
     themeClass: "theme-candyland",
     previewClass: "candyland-preview",
     page: "transition.html?next=world.html?world=candyland",
-    dialogue: "CANDYLAND glows with sugar-sweet color.",
+    dialogue: "CANDYLAND waits beyond the sugar haze.",
     floats: [
-      { type: "circle", left: "18%", top: "22%", color: "#ffd0e8", delay: "0s" },
-      { type: "circle", left: "80%", top: "26%", color: "#ff94b8", delay: "0.15s" },
-      { type: "circle", left: "26%", top: "72%", color: "#fff0b8", delay: "0.35s" },
-      { type: "circle", left: "74%", top: "68%", color: "#ffbfd3", delay: "0.55s" }
-    ]
+  { image: "object/lollipop.png", left: "9%", top: "18%", size: "62px", delay: "0s", rotate: "-10deg" },
+  { image: "object/lollipop.png", left: "31%", top: "12%", size: "42px", delay: "0.3s", rotate: "8deg" },
+  { image: "object/lollipop.png", left: "70%", top: "20%", size: "56px", delay: "0.6s", rotate: "12deg" },
+  { image: "object/lollipop.png", left: "88%", top: "58%", size: "46px", delay: "0.9s", rotate: "-14deg" },
+  { image: "object/lollipop.png", left: "14%", top: "76%", size: "52px", delay: "1.2s", rotate: "10deg" },
+  { image: "object/lollipop.png", left: "66%", top: "82%", size: "68px", delay: "1.5s", rotate: "-7deg" }
+]
   },
   {
     key: "carnival",
@@ -53,13 +57,15 @@ const worlds = [
     themeClass: "theme-carnival",
     previewClass: "carnival-preview",
     page: "transition.html?next=world.html?world=carnival",
-    dialogue: "CARNIVAL sparkles just beyond the curtain.",
+    dialogue: "CARNIVAL stirs from striped tents.",
     floats: [
-      { type: "circle", left: "14%", top: "24%", color: "#ffcc5a", delay: "0s" },
-      { type: "diamond", left: "82%", top: "20%", color: "#ff5c6c", delay: "0.2s" },
-      { type: "circle", left: "23%", top: "74%", color: "#ffe5a3", delay: "0.4s" },
-      { type: "diamond", left: "79%", top: "70%", color: "#ffd463", delay: "0.6s" }
-    ]
+  { image: "object/balloon.png", left: "10%", top: "16%", size: "66px", delay: "0s", rotate: "-6deg" },
+  { image: "object/balloon.png", left: "34%", top: "22%", size: "44px", delay: "0.3s", rotate: "8deg" },
+  { image: "object/balloon.png", left: "76%", top: "12%", size: "58px", delay: "0.6s", rotate: "5deg" },
+  { image: "object/balloon.png", left: "90%", top: "50%", size: "48px", delay: "0.9s", rotate: "-10deg" },
+  { image: "object/balloon.png", left: "18%", top: "78%", size: "54px", delay: "1.2s", rotate: "12deg" },
+  { image: "object/balloon.png", left: "72%", top: "74%", size: "70px", delay: "1.5s", rotate: "-4deg" }
+]
   },
   {
     key: "concert",
@@ -67,13 +73,15 @@ const worlds = [
     themeClass: "theme-concert",
     previewClass: "concert-preview",
     page: "transition.html?next=world.html?world=concert",
-    dialogue: "CONCERT calls with lights and thunder.",
+    dialogue: "CONCERT echoes under neon lights.",
     floats: [
-      { type: "bar", left: "18%", top: "16%", color: "#ffffff", delay: "0s" },
-      { type: "bar", left: "78%", top: "18%", color: "#ffbddf", delay: "0.2s" },
-      { type: "circle", left: "25%", top: "74%", color: "#ff95ba", delay: "0.4s" },
-      { type: "circle", left: "76%", top: "69%", color: "#ffe3f0", delay: "0.6s" }
-    ]
+  { image: "object/microphone.png", left: "8%", top: "20%", size: "62px", delay: "0s", rotate: "-55deg" },
+  { image: "object/microphone.png", left: "30%", top: "14%", size: "42px", delay: "0s", rotate: "-35deg" },
+  { image: "object/microphone.png", left: "73%", top: "18%", size: "56px", delay: "0s", rotate: "-65deg" },
+  { image: "object/microphone.png", left: "88%", top: "64%", size: "46px", delay: "0s", rotate: "-30deg" },
+  { image: "object/microphone.png", left: "14%", top: "72%", size: "50px", delay: "0s", rotate: "-70deg" },
+  { image: "object/microphone.png", left: "68%", top: "82%", size: "66px", delay: "0s", rotate: "-45deg" }
+]
   },
   {
     key: "mansion",
@@ -81,13 +89,15 @@ const worlds = [
     themeClass: "theme-mansion",
     previewClass: "mansion-preview",
     page: "transition.html?next=world.html?world=mansion",
-    dialogue: "MANSION waits in velvet gold.",
+    dialogue: "MANSION lingers in velvet shadows.",
     floats: [
-      { type: "diamond", left: "19%", top: "20%", color: "#ffd58e", delay: "0s" },
-      { type: "diamond", left: "79%", top: "24%", color: "#ffe7b8", delay: "0.2s" },
-      { type: "diamond", left: "25%", top: "72%", color: "#d7b36f", delay: "0.4s" },
-      { type: "diamond", left: "75%", top: "68%", color: "#ffdb9a", delay: "0.6s" }
-    ]
+  { image: "object/diamond.png", left: "9%", top: "15%", size: "58px", delay: "0s", rotate: "-8deg" },
+  { image: "object/diamond.png", left: "29%", top: "25%", size: "38px", delay: "0.3s", rotate: "8deg" },
+  { image: "object/diamond.png", left: "72%", top: "13%", size: "52px", delay: "0.6s", rotate: "12deg" },
+  { image: "object/diamond.png", left: "87%", top: "55%", size: "44px", delay: "0.9s", rotate: "-10deg" },
+  { image: "object/diamond.png", left: "17%", top: "77%", size: "48px", delay: "1.2s", rotate: "14deg" },
+  { image: "object/diamond.png", left: "76%", top: "78%", size: "64px", delay: "1.5s", rotate: "-6deg" }
+]
   },
   {
     key: "paradise",
@@ -95,13 +105,15 @@ const worlds = [
     themeClass: "theme-paradise",
     previewClass: "paradise-preview",
     page: "transition.html?next=world.html?world=paradise",
-    dialogue: "PARADISE breathes in green and waterlight.",
+    dialogue: "PARADISE whispers through the mist.",
     floats: [
-      { type: "circle", left: "18%", top: "18%", color: "#a8f4d0", delay: "0s" },
-      { type: "diamond", left: "80%", top: "24%", color: "#c0ffe7", delay: "0.2s" },
-      { type: "circle", left: "24%", top: "72%", color: "#79d8b5", delay: "0.4s" },
-      { type: "diamond", left: "76%", top: "68%", color: "#b7ffdf", delay: "0.6s" }
-    ]
+  { image: "object/flower.png", left: "8%", top: "18%", size: "60px", delay: "0s", rotate: "-10deg" },
+  { image: "object/flower.png", left: "32%", top: "13%", size: "40px", delay: "0.3s", rotate: "9deg" },
+  { image: "object/flower.png", left: "74%", top: "20%", size: "54px", delay: "0.6s", rotate: "12deg" },
+  { image: "object/flower.png", left: "89%", top: "56%", size: "46px", delay: "0.9s", rotate: "-12deg" },
+  { image: "object/flower.png", left: "15%", top: "74%", size: "50px", delay: "1.2s", rotate: "10deg" },
+  { image: "object/flower.png", left: "70%", top: "82%", size: "66px", delay: "1.5s", rotate: "-7deg" }
+]
   }
 ];
 
@@ -119,7 +131,7 @@ let cursorX = mouseX;
 let cursorY = mouseY;
 const ease = 0.35;
 
-const exploredWorlds = JSON.parse(localStorage.getItem("dynamicEscapadeExplored")) || [];
+const exploredWorlds = JSON.parse(sessionStorage.getItem("dynamicEscapadeExplored")) || [];
 
 const params = new URLSearchParams(window.location.search);
 const shouldSkipIntro =
@@ -167,7 +179,7 @@ function showWorldSelect() {
 function saveExploredWorld(worldKey) {
   if (!exploredWorlds.includes(worldKey)) {
     exploredWorlds.push(worldKey);
-    localStorage.setItem("dynamicEscapadeExplored", JSON.stringify(exploredWorlds));
+    sessionStorage.setItem("dynamicEscapadeExplored", JSON.stringify(exploredWorlds));
   }
 }
 
@@ -190,6 +202,7 @@ function renderWorld() {
 
   portal.classList.remove("entering");
   portal.classList.remove("is-hovered");
+  portal.classList.remove("is-explored");
 
   portalWorldName.textContent = world.name;
   portalPreview.className = `portal-preview ${world.previewClass}`;
@@ -199,6 +212,7 @@ function renderWorld() {
   body.classList.remove("portal-hover");
 
   if (exploredWorlds.includes(world.key)) {
+    portal.classList.add("is-explored");
     body.classList.add(world.themeClass);
     body.classList.add("world-tinted");
     renderFloatingElements(world);
@@ -215,30 +229,18 @@ function renderFloatingElements(world) {
   floatingLayer.innerHTML = "";
 
   world.floats.forEach((item) => {
-    const shape = document.createElement("div");
-    shape.classList.add("float-shape");
-    shape.style.left = item.left;
-    shape.style.top = item.top;
-    shape.style.animationDelay = item.delay || "0s";
+    const object = document.createElement("img");
 
-    if (item.type === "circle") {
-      shape.classList.add("float-circle");
-      shape.style.background = item.color;
-    } else if (item.type === "square") {
-      shape.classList.add("float-square");
-      shape.style.background = item.color;
-    } else if (item.type === "diamond") {
-      shape.classList.add("float-diamond");
-      shape.style.background = item.color;
-    } else if (item.type === "bar") {
-      shape.classList.add("float-bar");
-      shape.style.background = item.color;
-    } else if (item.type === "snow") {
-      shape.classList.add("float-snow");
-      shape.textContent = item.content || "❄";
-    }
+    object.classList.add("float-object");
+    object.src = item.image;
+    object.alt = "";
+    object.style.left = item.left;
+    object.style.top = item.top;
+    object.style.width = item.size;
+    object.style.animationDelay = item.delay || "0s";
+    object.style.setProperty("--start-rotate", item.rotate || "0deg");
 
-    floatingLayer.appendChild(shape);
+    floatingLayer.appendChild(object);
   });
 }
 
